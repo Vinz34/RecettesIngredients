@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Site pour les recettes - {% block title %}Accueil{% endblock %}</title>
+	<style>
+		header {
+			background-color: #f2f2f2;
+			padding: 20px;
+			text-align: center;
+			position: relative;
+		}
+		h1 {
+			margin: 0;
+		}
+		nav {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+		}
+		nav a {
+			margin-left: 20px;
+			color: #333;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 18px;
+		}
+		nav a:hover {
+			color: #666;
+		}
+		.settings {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			color: #333;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 18px;
+		}
+		.settings:hover {
+			color: #666;
+		}
+        .admin {
+			position: absolute;
+			top: 20px;
+			left: 100px;
+			color: #333;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 18px;
+		}
+		.admin:hover {
+            color: #666;
+        }
+
+		main {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			text-align: center;
+		}
+		h2 {
+			font-size: 36px;
+			margin-top: 0;
+		}
+		p {
+			font-size: 18px;
+			line-height: 1.5;
+		}
+		a {
+			color: #333;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		a:hover {
+			color: #666;
+		}
+	</style>
+</head>
+<body>
+	<header>
+
+		<h1>Site de recettes</h1>
+
+		<nav>
+			<a href="">Home</a>
+            <a href="ingredients/">Ingredients</a>
+			<a href="recipes/">Recettes</a>
+		</nav>
+
+		<a href="settings/" class="settings">Settings</a>
+            {% if user.is_authenticated == user.is_staff %}
+                <a href="admin/" class="admin">Admin</a>
+            {% endif %}
+
+	</header>
+	<main>
+		<h2>Bienvenue sur le site pour stocker les recettes</h2>
+		<p>Ici tu peux ajouter tes recettes et ensuite les trier et voir les ingrédients</p>
+
+		<p>Clique sur le lien <a href="restaurants/">Recettes</a> pour commencer</p>
+
+
+
+
+	</main>
+</body>
+</html>
+

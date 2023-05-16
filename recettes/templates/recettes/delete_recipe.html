@@ -1,0 +1,9 @@
+{% block content %}
+  <h1>Supprimer la recette "{{ recipe.title }}"</h1>
+  <p>Êtes-vous sûr de vouloir supprimer la recette "{{ recipe.title }}"?</p>
+  <form action="{% url 'recettes:delete_recipe' recipe.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Supprimer</button>
+    <a href="{% url 'recettes:recipe_list' %}">Annuler</a>
+  </form>
+{% endblock %}

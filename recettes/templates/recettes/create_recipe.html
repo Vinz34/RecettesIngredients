@@ -1,0 +1,53 @@
+{% block content %}
+  <h2>Add Recipe</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+      <!--<button id="add-new-ingredient" type="button">Ajouter ingrédient</button>-->
+      <br>
+      <br>
+    <button type="submit">Add Recipe</button>
+
+  </form>
+    <a href="../">Back</a>
+{% endblock %}
+
+<script>
+    const addNewIngredientBtn = document.querySelector('#add-new-ingredient');
+const newIngredientInput = document.querySelector('#id_new_ingredient');
+const ingredientList = document.querySelector('#id_ingredients');
+
+addNewIngredientBtn.addEventListener('click', () => {
+    const newIngredientName = newIngredientInput.value.trim();
+        console.log('New ingredient name:', newIngredientName); // Ajout d'un console.log pour débuguer
+
+    if (newIngredientName !== '') {
+        // Vérifier si l'ingrédient existe déjà dans la base de données
+        fetch(`/ingredients/check/${newIngredientName}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // Si l'ingrédient existe déjà, ajouter simplement l'option à la liste
+                    const newIngredientOption = new Option(newIngredientName, data.id, true, true);
+                    ingredientList.append(newIngredientOption);
+                } else {
+                    // Si l'ingrédient n'existe pas, l'ajouter à la base de données
+                    fetch('/ingredients/add/', {
+                        method: 'POST',
+                        body: JSON.stringify({name: newIngredientName}),
+                        headers: {'Content-Type': 'application/json'}
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ajouter l'option à la liste avec l'ID nouvellement créé
+                        const newIngredientOption = new Option(newIngredientName, data.id, true, true);
+                        ingredientList.append(newIngredientOption);
+                    });
+                }
+                // Réinitialiser le champ d'ajout d'ingrédient
+                newIngredientInput.value = '';
+            });
+    }
+});
+
+</script>

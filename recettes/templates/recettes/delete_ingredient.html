@@ -1,0 +1,9 @@
+{% block content %}
+  <h1>Supprimer l'ingrédient "{{ ingredient.name }}"</h1>
+  <p>Êtes-vous sûr de vouloir supprimer l'ingrédient "{{ ingredient.name }}"?</p>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <button type="submit">Supprimer</button>
+    <a href="../../">Annuler</a>
+  </form>
+{% endblock %}

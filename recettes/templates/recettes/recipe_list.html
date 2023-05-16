@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<a href="../">Retour</a>
+<head>
+  <title>Liste de recettes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+
+    #ingredients {
+      margin-bottom: 40px;
+    }
+
+    #ingredients label {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    #recettes {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .recette {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .recette img {
+      max-width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+
+    .recette a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .recette a:hover {
+      text-decoration: underline;
+    }
+
+    .ingredient-count {
+      color: gray;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Liste de recettes</h1>
+
+  <h2>Ingrédients disponibles</h2>
+  {% if not ingredients %}
+      {{ "Pas encore d'ingrédients" }}
+  {% endif %}
+  <div id="ingredients">
+    {% for ingredient in ingredients %}
+    <label>
+        <input type="checkbox" name="ingredient" value="{{ ingredient }}">{{ ingredient }}
+        <span class="ingredient-count">({{ ingredient.count }})</span>
+    </label>
+    {% endfor %}
+  </div>
+
+    <!--<h2>Barre de recherche</h2>
+    <input type="text" id="search-input" placeholder="Rechercher..." onkeyup="searchRecipes()">-->
+
+
+
+  <h2>Recettes</h2>
+  {% if not recettes %}
+      {{ "Pas encore de recettes" }}
+  {% endif %}
+  <div id="recettes">
+    {% for recette in recettes %}
+    <div class="recette" data-ingredients="{{ recette.ingredients }}">
+        {% if recette.image == "uploads/unknown.png" %}
+            <img src="../../media/uploads/unknown.png" alt="{{ recette.name }}" width="150px" height="100">
+        {% else %}
+      <a href="{{ recette.id }}/"><img src="../../media/{{ recette.image }}" alt="{{ recette.name }}" width="150px" height="200"></a>
+        {% endif %}
+    <br>
+    <a href="{{ recette.id }}/">{{ recette.name }}</a>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    console.log("f")
+    // Sélectionner les cases à cocher des ingrédients
+    const checkboxes = document.querySelectorAll('input[name="ingredient"]');
+
+    // Ajouter un écouteur d'événement pour chaque case à cocher
+    checkboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        // Récupérer les ingrédients sélectionnés
+        const selectedIngredients = Array.from(document.querySelectorAll('input[name="ingredient"]:checked')).map(function(checkbox) {
+          return checkbox.value;
+        });
+
+        // Cacher toutes les recettes
+        const recettes = document.querySelectorAll('.recette');
+        recettes.forEach(function(recette) {
+          recette.style.display = 'none';
+        });
+
+        // Afficher les recettes qui contiennent les ingrédients sélectionnés
+        if (selectedIngredients.length === 0) {
+          recettes.forEach(function(recette) {
+            recette.style.display = 'block';
+          });
+        } else {
+          recettes.forEach(function(recette) {
+            const ingredientsString = recette.getAttribute('data-ingredients');
+            const recipeIngredients = ingredientsString.split(',');
+
+            // Vérifier si tous les ingrédients sélectionnés sont présents dans la recette
+            const hasAllIngredients = selectedIngredients.every(function(ingredient) {
+              return recipeIngredients.includes(ingredient);
+            });
+
+            if (hasAllIngredients) {
+              recette.style.display = 'block';
+            } else {
+              recette.style.display = 'none';
+            }
+          });
+        }
+      });
+    });
+    // Fonction de recherche des recettes
+  function searchRecipes() {
+    // Récupérer la valeur saisie dans la barre de recherche
+    const searchValue = document.getElementById('search-input').value.toLowerCase();
+
+    // Récupérer toutes les recettes
+    const recettes = document.querySelectorAll('.recette');
+
+    if(searchValue==''){
+        recettes.forEach(function(recette) {
+            recette.style.display = 'block';
+          });
+    }
+    else{
+        // Parcourir les recettes et afficher/cacher en fonction des mots-clés de recherche
+      console.log("oui" + searchValue)
+    recettes.forEach(function(recette) {
+        console.log({{ recette.name }})
+      const recetteName = "{{ recette.name }}";
+    console.log("ez")
+        console.log(recetteName)
+      if (recetteName.includes(searchValue) && searchValue!='') {
+        recette.style.display = 'block';
+      } else {
+        recette.style.display = 'none';
+      }
+    });
+    }
+
+  }
+  </script>
+</body>
+<br>
+<a href="../">Retour</a>
+</html>
+

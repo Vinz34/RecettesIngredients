@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ recipe.name }}</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f2f2f2;
+    }
+
+    .recipe-card {
+        width: 600px; /* Largeur ajustée */
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .recipe-card h1 {
+      font-size: 24px;
+    }
+
+    .recipe-card p {
+      margin-bottom: 20px;
+    }
+
+    .recipe-card h2 {
+      font-size: 18px;
+    }
+
+    .recipe-card ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .recipe-card img {
+      width: 200px;
+      height: 200px;
+      margin-top: 20px;
+      border-radius: 50%;
+    }
+
+    .recipe-card a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .recipe-card a:hover {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="recipe-card">
+    <h1>{{ recipe.name }}</h1>
+    <p>{{ recipe.description }}</p>
+
+
+
+    <h2>Ingrédients</h2>
+    <ul id="ingredientList"></ul>
+
+  <script>
+      var ingredients = "{{ recipe.ingredients }}";
+      var ingredientList = ingredients.split(",");
+
+      for (var i = 0; i < ingredientList.length; i++) {
+          document.getElementById("ingredientList").innerHTML += "<li>" + "- "+ ingredientList[i] + "</li>";
+      }
+    </script>
+
+    <h2>Recette</h2>
+    <ol>
+      {{ recipe.recette }}
+    </ol>
+
+    {% if recipe.image == "uploads/unknown.png" %}
+      <img src="../../media/uploads/unknown.png" alt="{{ recipe.name }}">
+    {% else %}
+      <img src="../../media/{{ recipe.image }}" alt="{{ recipe.name }}" width="200" height="200">
+    {% endif %}
+
+    <br>
+    <br>
+    <a href="../">Retour</a>
+    <a href="recipe_edit/">Modifier la recette</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<h1>Modifier Recette</h1>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send">
+ </form>
+
+<a href="../../" class="back-btn">Back</a>
+<a href="../recipe_delete">Supprimer</a>

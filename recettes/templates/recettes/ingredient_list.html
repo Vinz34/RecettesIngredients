@@ -1,0 +1,21 @@
+{% block content %}
+  <h1>Tous les ingrédients</h1>
+    {% if not ingredients %}
+       {{ "Pas encore d'ingrédients" }}
+    {% endif %}
+  <ul>
+    {% for ingr in ingredients %}
+      <li>
+        <h2>{{ ingr.name }}
+
+            <a href="{{ ingr.id }}/delete_ingredient/" >Supprimer l'ingrédient</a>
+            <a href="{{ ingr.id }}/edit_ingredient/" >Modifier l'ingrédient</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
+    <a href="../settings/ingredient/">Ajouter un ingrédient</a>
+    <br>
+    <br>
+    <a href="../">Home</a>
+{% endblock %}
